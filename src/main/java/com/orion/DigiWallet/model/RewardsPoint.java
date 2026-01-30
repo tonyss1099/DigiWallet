@@ -1,15 +1,27 @@
 package com.orion.DigiWallet.model;
 
+import jakarta.persistence.*;
+
+import java.time.LocalDateTime;
+
 //TODO: 3.3
 // Define this class as a JPA entity mapped to "rewards_point" table
 // ADD @table annotation to specify the table name as "rewards_point"
+@Entity
+@Table(name = "rewards_point")
 public class RewardsPoint {
 
     //TODO: 3.3.1
     // Define id as primary key with auto-generation strategy
+    @Id
+    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    private Long id;
+
 
     //TODO: 3.3.2
     // Define points field to store the number of reward points
+    @Column(name = "points", nullable = false)
+    private Integer points;
 
     //TODO: 3.3.3
     // Define wallet field to establish many-to-one relationship with Wallet entity
@@ -18,9 +30,39 @@ public class RewardsPoint {
     //TODO: 3.3.4
     // Define updatedAt field to store the timestamp of last update
     // This value should be automatically updated whenever points are modified
+    private LocalDateTime updatedAt;
+    @PreUpdate
+    public void onPreUpdate() {
+        this.updatedAt = LocalDateTime.now();
+    }
 
     //TODO: 3.3.5
     // Generate getters and setters for all fields
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Integer getPoints() {
+        return points;
+    }
+
+    public void setPoints(Integer points) {
+        this.points = points;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
 
     //TODO: 3.3.6
     // THIS TABLE IS NOT THERE IN MYSQL SO WHEN YOU RUN IT JPA WILL CREATE IT AUTOMATICALLY
